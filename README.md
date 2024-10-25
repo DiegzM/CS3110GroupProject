@@ -2,8 +2,8 @@
 
 ### Group Name: 
 
-**Member**:
+**Member**: Diego Mejia
 
 **Member**: Jazmin Carlos (@jazcar1205) (jazmincarlos@cpp.edu)
 
-**Member**:
+**Member**: Juan Sarmiento
