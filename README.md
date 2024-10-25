@@ -2,7 +2,7 @@
 
 ### Group Name: 
 
-**Member**: Diego Mejia
+**Member**: Diego Mejia (@DiegzM) (diegomejia@cpp.edu)
 
 **Member**: Jazmin Carlos (@jazcar1205) (jazmincarlos@cpp.edu)
 
