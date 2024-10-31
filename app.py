@@ -166,6 +166,7 @@ def file_input_mode():
                     print(output_text)
                     with open('out.txt', 'a') as output_file:
                         output_file.write(output_text + '\n')
+            print('\nResults saved to out.txt')   
 
         except FileNotFoundError:
             print("Error: File Not Found")
@@ -179,4 +180,6 @@ while True:
     option = input("Type 1 to manually input literals, or type 2 to read a file of inputs, or type any other key to quit: ")
     if option == '1': manual_input_mode()
     elif option == '2': file_input_mode()
-    else: break
+    else: 
+        print()
+        break

@@ -1,3 +1,14 @@
 103: True
 0xA2: True
 0o323: True
+0_000: True
+0xF1G: False
+0XCAFE: True
+0o524: True
+0O49: False
+1_00_0000: True
+_000_1: False
+2043: True
+48439: True
+9_44: True
+0x132: True
