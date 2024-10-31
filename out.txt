@@ -1,0 +1,3 @@
+103: True
+0xA2: True
+0o323: True

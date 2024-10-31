@@ -59,8 +59,9 @@ class NFA:
 # Function to create the decinteger NFA
 def create_integer_nfa():
     states = {'q0', 'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10', 'q11', 'q12', 'q13', 'q14',
-              'q15', 'q16', 'q17', 'q18', 'q19', 'q20', 'q21', 'q22', 'q23', 'q24', 'q25', 'q26', 'q27', 'q28', 'q29', 'q30'}                  
-    alphabet = {'digit', '_'}                  
+              'q15', 'q16', 'q17', 'q18', 'q19', 'q20', 'q21', 'q22', 'q23', 'q24', 'q25', 'q26', 'q27', 'q28', 'q29', 'q30',
+              'q31', 'q32', 'q33', 'q34', 'q35', 'q36', 'q37', 'q38', 'q39', 'q40', 'q42', 'q43', 'q44', 'q45', 'q46', 'q47'}                  
+    alphabet = {'hexdigit', 'o', 'O', 'x', 'X', '_'}                  
     transitions = {
         # Starting state
         ('q0', ''): ['q1', 'q8', 'q15', 'q31'],
@@ -136,15 +137,46 @@ def normalize_string(string):
             normalized_string = string[1:]
     return normalized_string
 
-
-# ------- MAIN PROGRAM -----------
-# Create NFAs
+# ------- INITIALIZE NFAs ----------
 decinteger_nfa = create_integer_nfa()
+
+# ------- PROGRAM MODES ----------
+def manual_input_mode():
+    while True:
+        print()
+        input_string = input("Enter a decinteger, hexinteger, octinteger, or type b to go back: ")
+        input_string = normalize_string(input_string)
+        if input_string == 'b': break
+        print(decinteger_nfa.accepts(input_string))
+
+def file_input_mode():
+    while True:
+        print()
+        input_file = input("Enter a file (with extension .txt), or type b to go back: ")
+        if input_file == "b": break
+        print()
+        try:
+            with open("out.txt", 'w') as output_file:
+                output_file.write("")
+            with open(input_file, 'r') as input_file:
+                for line in input_file:
+                    input_string = line.strip()
+                    input_string = normalize_string(input_string)
+                    output_text = input_string + ": " + str(decinteger_nfa.accepts(input_string))
+                    print(output_text)
+                    with open('out.txt', 'a') as output_file:
+                        output_file.write(output_text + '\n')
+
+        except FileNotFoundError:
+            print("Error: File Not Found")
+
+
+# ------- MAIN PROGRAM LOOP -----------
 
 # Main loop
 while True:
     print()
-    test_string = input("Input a decinteger, hexinteger, octinteger, or input q to quit: ")
-    test_string = normalize_string(test_string)
-    if test_string == "q": break
-    print(decinteger_nfa.accepts(test_string))
+    option = input("Type 1 to manually input literals, or type 2 to read a file of inputs, or type any other key to quit: ")
+    if option == '1': manual_input_mode()
+    elif option == '2': file_input_mode()
+    else: break
