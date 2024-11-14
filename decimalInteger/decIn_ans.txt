@@ -1,0 +1,10 @@
+123	accept
+1__4	reject
+546	accept
+985	accept
+_23	reject
+4_3_4	accept
+0	accept
+00	accept 
+0_0	accept 
+0_1	reject
