@@ -12,4 +12,4 @@
 
 **Member**: Juan Sarmiento (@Pibe2703) (jfs@cpp.edu)
 * NFA Design - Creating the NfAs for Literals
-*  -  Designing decimal, octal, hexadecimal,floating point literal NFAs 
+    -  Designing decimal, octal, hexadecimal,floating point literal NFAs 
