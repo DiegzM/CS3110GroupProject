@@ -60,11 +60,12 @@ class NFA:
 def create_integer_nfa():
     states = {'q0', 'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10', 'q11', 'q12', 'q13', 'q14',
               'q15', 'q16', 'q17', 'q18', 'q19', 'q20', 'q21', 'q22', 'q23', 'q24', 'q25', 'q26', 'q27', 'q28', 'q29', 'q30',
-              'q31', 'q32', 'q33', 'q34', 'q35', 'q36', 'q37', 'q38', 'q39', 'q40', 'q42', 'q43', 'q44', 'q45', 'q46', 'q47'}                  
+              'q31', 'q32', 'q33', 'q34', 'q35', 'q36', 'q37', 'q38', 'q39', 'q40', 'q42', 'q43', 'q44', 'q45', 'q46', 'q47',
+              'q48', 'q49', 'q50', 'q51', 'q52', 'q53', 'q54', 'q55', 'q56', 'q57', 'q58', 'q59', 'q60', 'q61', 'q62', 'q63', 'q64', 'q65', 'q66', 'q67', 'q68', 'q69', 'q70', 'q71', 'q72', 'q73', 'q74', 'q75', 'q76', 'q77', 'q78', 'q79', 'q80', 'q81', 'q82', 'q83', 'q84', 'q85', 'q86', 'q87'}                  
     alphabet = {'hexdigit', 'o', 'O', 'x', 'X', '_'}                  
     transitions = {
         # Starting state
-        ('q0', ''): ['q1', 'q8', 'q15', 'q31'],
+        ('q0', ''): ['q1', 'q8', 'q15', 'q31', 'q48'],
         # Decinteger Transitions
         ('q1', 'nonzerodigit'): ['q2'],
         ('q2', ''): ['q3'],
@@ -122,9 +123,59 @@ def create_integer_nfa():
         ('q45', ''): ['q46'],
         ('q46', 'octdigit'): ['q47'],
         ('q47', ''): ['q44'],
+        #Float Transitions
+        ('q48', ''): ['q49', 'q81'],
+        ('q49', ''): ['q50','q61'],
+        ('q50', 'digit'): ['q51'],
+        ('q51', ''): ['q52', 'q67'],
+        ('q51', '.'): ['q55'],
+        ('q52', ''): ['q53'],
+        ('q52', '_'): ['q53'],
+        ('q53', 'digit'): ['q54'],
+        ('q54', '.'): ['q55'],
+        ('q55', 'digit'): ['q56'],
+        ('q55', ''): ['q67'],
+        ('q56', ''): ['q57'],
+        ('q57', ''): ['q58'],
+        ('q58', ''): ['q59'],
+        ('q58', '_'): ['q59'],
+        ('q59', 'digit'): ['q60'],
+        ('q60', ''): ['q58', 'q67'],
+        ('q61', 'digit'): ['q62'],
+        ('q62', ''): ['q63'],
+        ('q63', ''): ['q64'],
+        ('q64', ''): ['q65'],
+        ('q64', '_'): ['q65'],
+        ('q65', 'digit'): ['q66'],
+        ('q66', ''): ['q64', 'q67'],
+        ('q67', ''): ['q68', 'q70'],
+        ('q68', 'e'): ['q69'],
+        ('q69', ''): ['q72', 'q75'],
+        ('q70', 'E'): ['q71'],
+        ('q71', ''): ['q72', 'q75'],
+        ('q72', ''): ['q73', 'q74'],
+        ('q72', '+'): ['q73'],
+        ('q72', '-'): ['q74'],
+        ('q73', ''): ['q75'],
+        ('q74', ''): ['q75'],
+        ('q75', 'digit'): ['q76'],
+        ('q76', ''): ['q77'],
+        ('q77', ''): ['q78'],
+        ('q78', ''): ['q79'],
+        ('q78', '_'): ['q79'],
+        ('q79', 'digit'): ['q80'],
+        ('q80', ''): ['q78'],
+        ('q81', '.'): ['q82'],
+        ('q82', 'digit'): ['q83'],
+        ('q83', ''): ['q84'],
+        ('q84', ''): ['q85'],
+        ('q85', ''): ['q86'],
+        ('q85', '_'): ['q86'],
+        ('q86', 'digit'): ['q87'],
+        ('q87', ''): ['q85'],
     }
     start_state = 'q0'                     
-    final_states = {'q3', 'q7', 'q10', 'q14', 'q27', 'q30', 'q43', 'q47'} 
+    final_states = {'q3', 'q7', 'q10', 'q14', 'q27', 'q30', 'q43', 'q47', 'q52', 'q54', 'q55', 'q57', 'q60', 'q63', 'q66', 'q77', 'q80', 'q84', 'q87'} 
 
     nfa = NFA(states, alphabet, transitions, start_state, final_states)
     return nfa
@@ -138,16 +189,16 @@ def normalize_string(string):
     return normalized_string
 
 # ------- INITIALIZE NFAs ----------
-decinteger_nfa = create_integer_nfa()
+integer_nfa = create_integer_nfa()
 
 # ------- PROGRAM MODES ----------
 def manual_input_mode():
     while True:
         print()
-        input_string = input("Enter a decinteger, hexinteger, octinteger, or type b to go back: ")
+        input_string = input("Enter a decinteger, hexinteger, octinteger, float, or type b to go back: ")
         input_string = normalize_string(input_string)
         if input_string == 'b': break
-        print(decinteger_nfa.accepts(input_string))
+        print(integer_nfa.accepts(input_string))
 
 def file_input_mode():
     while True:
@@ -162,7 +213,7 @@ def file_input_mode():
                 for line in input_file:
                     input_string = line.strip()
                     input_string = normalize_string(input_string)
-                    output_text = input_string + ": " + str(decinteger_nfa.accepts(input_string))
+                    output_text = input_string + ": " + str(integer_nfa.accepts(input_string))
                     print(output_text)
                     with open('out.txt', 'a') as output_file:
                         output_file.write(output_text + '\n')
